@@ -1,0 +1,95 @@
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>DataTable</title>
+    <style>
+        table {
+            width: 300px;
+            font: 17px Calibri;
+        }
+
+        table, th, td {
+            
+            border-collapse: collapse;
+            padding: 2px 3px;
+            text-align: center;
+        }
+
+            table img {
+                border: none;
+                width: 180px;
+                height: 180px;
+                padding-top: 10px;
+                padding-bottom: 10px;
+                padding-left: 10px;
+                padding-right: 10px;
+            }
+    </style>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+    <script>
+        
+            $.ajax({
+            url: "https://jsonplaceholder.typicode.com/photos?_start=0&_limit=8",
+            type: "GET",
+            contentType: "application/json",
+            dataType: "json",
+            success: function (response) {
+                //$("#photo").html(response[18].thumbnailUrl);
+                var ass = response[2].thumbnailUrl;
+                var arrItems = [];
+                $.each(response, function (index, value) {
+                    arrItems.push(value);
+                });
+
+                var table = document.createElement("table");
+
+                var tr = table.insertRow(-1);                   // Table row.
+            
+                //var col = Math.ceil(arrItems.length / 5);
+                //var count = 0;
+               
+                // Add JSON data to the table as rows.
+                
+
+                    for (var j = 0; j < arrItems.length; j++) {
+                        //tr = table.insertRow(-1);
+                        
+                        var tabCell = tr.insertCell(j);
+                        
+                        // Create an <img> element to show the images.
+                        var img = document.createElement('img');
+                        img.src = arrItems[j].thumbnailUrl;   // The image source from JSON array.
+                        tabCell.appendChild(img);
+                        //tabCell.appendChild(arrItems[j].title);  
+
+                    }
+                
+
+                // adding the newly created <table> with data to a container.
+                var divContainer = document.getElementById("showData");
+                divContainer.appendChild(table);
+            
+    
+
+            },
+        });
+
+        function deleteRow() {
+
+        }
+    </script>
+</head>
+<body>
+    <h1>STORE</h1>
+    <div id="showData"></div>
+    <div>
+        <button onclick="deleteRow()"> Delete</button>
+    </div>
+</body>
+</html>
